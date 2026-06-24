@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Philbert Chan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #08090C;
+    --panel: #0D1117;
+    --text: #E2DDD6;
+    --text-dim: #6B7280;
+    --steel: #4A6FA5;
+    --ember: #C4784A;
+    --rule: #1C2128;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--void);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Star field */
+  #stars {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.35;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---- Opening ---- */
+  .opening {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 0 60px;
+  }
+
+  .opening-line {
+    font-family: var(--display);
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 48px;
+    max-width: 600px;
+  }
+
+  .opening-line em {
+    font-style: normal;
+    color: var(--ember);
+  }
+
+  .name-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .name {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--steel);
+  }
+
+  .name-sub {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+  }
+
+  /* ---- Sections ---- */
+  .section {
+    padding: 80px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .section-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin-bottom: 28px;
+  }
+
+  .section-heading {
+    font-family: var(--display);
+    font-size: clamp(22px, 3.5vw, 32px);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+
+  .section-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #B0AAA2;
+    max-width: 620px;
+  }
+
+  .section-body p + p {
+    margin-top: 16px;
+  }
+
+  .section-body em {
+    font-style: normal;
+    color: var(--text);
+  }
+
+  /* ---- Path / arc ---- */
+  .path-list {
+    list-style: none;
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .path-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+
+  .path-item:first-child { border-top: 1px solid var(--rule); }
+
+  .path-stage {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding-top: 3px;
+  }
+
+  .path-stage.now { color: var(--ember); }
+  .path-stage.next { color: var(--steel); }
+  .path-stage.later { color: var(--text-dim); }
+
+  .path-desc {
+    font-size: 15px;
+    color: #B0AAA2;
+    line-height: 1.6;
+  }
+
+  .path-desc strong { color: var(--text); font-weight: 500; }
+
+  /* ---- Heresies ---- */
+  .heresy-list {
+    list-style: none;
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .heresy-item {
+    padding: 20px 24px;
+    border-left: 2px solid var(--rule);
+    transition: border-color 0.2s;
+  }
+
+  .heresy-item:hover {
+    border-color: var(--ember);
+  }
+
+  .heresy-text {
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: #B0AAA2;
+  }
+
+  .heresy-text em {
+    font-style: normal;
+    color: var(--text);
+  }
+
+  /* ---- Work ---- */
+  .work-list {
+    list-style: none;
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .work-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.15s;
+  }
+
+  .work-item:first-of-type { border-top: 1px solid var(--rule); }
+  .work-item:hover .work-title { color: var(--ember); }
+
+  .work-title {
+    font-size: 15px;
+    color: var(--text);
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+
+  .work-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ---- Footer ---- */
+  .footer {
+    padding: 60px 0 80px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-link {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+
+  .footer-link:hover { color: var(--steel); }
+
+  @media (max-width: 600px) {
+    .wrap { padding: 0 20px; }
+    .path-item { grid-template-columns: 80px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="wrap">
+
+  <!-- Opening -->
+  <div class="opening">
+    <p class="opening-line">
+      The sky has made us bold.<br>
+      <em>What will the stars make us?</em>
+    </p>
+    <div class="name-block">
+      <span class="name">Philbert Chan</span>
+      <span class="name-sub">Finance &nbsp;·&nbsp; Product &nbsp;·&nbsp; Toronto</span>
+    </div>
+  </div>
+
+  <!-- Vision -->
+  <section class="section">
+    <p class="section-eyebrow">On this moment</p>
+    <h2 class="section-heading">This is the century that decides what comes next.</h2>
+    <div class="section-body">
+      <p>AI, biotech, and energy are converging simultaneously. This has not happened before. The next two decades will determine a lot about what comes after them.</p>
+      <p>I want to build something like <em>Bell Labs</em> — concentrated brilliant minds, long-horizon problems, no quarterly pressure. Not optimized for an exit. Designed to outlast its founders.</p>
+      <p>I'm early. The path is long. I know where I'm going.</p>
+    </div>
+  </section>
+
+  <!-- Path -->
+  <section class="section">
+    <p class="section-eyebrow">The arc</p>
+    <h2 class="section-heading">Finance. Product. Engineering. In that order, and all at once.</h2>
+    <div class="section-body">
+      <p>Each one compounds on the others. None of them goes away. The goal is to be the person who can read the model, own the roadmap, and understand what's actually hard to build — simultaneously.</p>
+    </div>
+    <ul class="path-list">
+      <li class="path-item">
+        <span class="path-stage now">Finance</span>
+        <span class="path-desc">How the numbers connect to decisions. Modelling, unit economics, capital allocation. The current phase — and also permanent. The analytical layer doesn't get replaced. It gets built on.</span>
+      </li>
+      <li class="path-item">
+        <span class="path-stage next">Product</span>
+        <span class="path-desc">Finance tells you what happened. Product decides what to do about it. The next move is into roles where both are live at the same time. TPM or product finance at a company building something that matters.</span>
+      </li>
+      <li class="path-item">
+        <span class="path-stage later">Engineering</span>
+        <span class="path-desc">Not to write production code. To be in the room and know what's actually hard. Enough depth that nothing gets hand-waved past me. Building this in parallel, now, through shipped projects.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Heresies -->
+  <section class="section">
+    <p class="section-eyebrow">Things I believe that most people won't say out loud</p>
+    <h2 class="section-heading">Things I believe that most people won't say.</h2>
+    <ul class="heresy-list">
+      <li class="heresy-item">
+        <p class="heresy-text">The 9-to-5, two weeks vacation, retire at 65 model is not a neutral default. <em>It is a decision.</em> Most people who make it don't know they're making it.</p>
+      </li>
+      <li class="heresy-item">
+        <p class="heresy-text">Most advice from successful people is noise. They survived a high-variance process and attributed it to skill. <em>The sample size is wrong.</em> The advice feels true to them. That's the problem.</p>
+      </li>
+      <li class="heresy-item">
+        <p class="heresy-text">Equality of outcome, pursued seriously, produces worse outcomes — including for the people it's supposed to help. <em>Variance is not a flaw.</em> It's the mechanism.</p>
+      </li>
+      <li class="heresy-item">
+        <p class="heresy-text">Civilization-scale work is what humans are for. You can feel it when you're near it. That feeling is not inspiration. <em>It's recognition.</em></p>
+      </li>
+      <li class="heresy-item">
+        <p class="heresy-text">Peter Thiel said there are only monopolies and perfect competition, and very little in between. Monopolies pretend there's competition. Commodities pretend they're differentiated. <em>I think he's right — and more right every year.</em> In the age of AI, winner-take-most dynamics are accelerating. The middle is getting thinner, not thicker. The only meaningful strategic question is which side of that line you're building on.</p>
+      </li>
+      <li class="heresy-item">
+        <p class="heresy-text">The world is not divided into rich and poor. It's divided into <em>makers and takers.</em> People who create value and people who extract it. Most political and economic conflict makes more sense through this lens than through class. The axis that matters is production vs extraction — and it cuts across every income bracket.</p>
+      </li>
+      <li class="heresy-item">
+        <p class="heresy-text">Diversity of appearance is not worth very much. <em>Diversity of thought is worth everything.</em> Different mental models, different epistemologies, different risk tolerances — that's what makes groups smarter. Demographic diversity without cognitive diversity is performance. Cognitive diversity without demographic diversity is possible, and often more valuable than the reverse.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Work -->
+  <section class="section">
+    <p class="section-eyebrow">Selected work</p>
+    <h2 class="section-heading">Built.</h2>
+    <ul class="work-list">
+      <a class="work-item" href="https://philbertcychan.github.io/instacart-grocery-pressure/" target="_blank">
+        <span class="work-title">Grocery Price Pressure Dashboard</span>
+        <span class="work-tag">Canada CPI · Elasticity</span>
+      </a>
+      <a class="work-item" href="https://philbertcychan.github.io/unit-econ-simulator/" target="_blank">
+        <span class="work-title">SaaS Unit Economics Simulator</span>
+        <span class="work-tag">LTV · CAC · NDR · Cohorts</span>
+      </a>
+    </ul>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a class="footer-link" href="work.html">Work</a>
+      <a class="footer-link" href="collage.html">Collage</a>
+      <a class="footer-link" href="https://github.com/philbertcychan" target="_blank">GitHub</a>
+      <a class="footer-link" href="mailto:philbertcychan@gmail.com">Email</a>
+      <a class="footer-link" href="https://www.linkedin.com/in/philbert-chan/" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+</div>
+
+<!-- Star field -->
+<script>
+(function() {
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let W, H;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function init() {
+    stars = [];
+    const count = Math.floor((W * H) / 6000);
+    for (let i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 0.8 + 0.1,
+        speed: Math.random() * 0.03 + 0.01,
+        opacity: Math.random() * 0.6 + 0.2,
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (const s of stars) {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(210, 220, 235, ${s.opacity})`;
+      ctx.fill();
+      s.y -= s.speed;
+      if (s.y < -2) { s.y = H + 2; s.x = Math.random() * W; }
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); init(); });
+  resize();
+  init();
+  draw();
+})();
+</script>
+
+</body>
+</html>

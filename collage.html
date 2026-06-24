@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Philbert Chan — Things That Move Me</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #08090C;
+    --panel: #0D1117;
+    --panel-border: #1C2128;
+    --text: #E2DDD6;
+    --text-dim: #6B7280;
+    --steel: #4A6FA5;
+    --ember: #C4784A;
+    --rule: #1C2128;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--void); color: var(--text); font-family: var(--body); -webkit-font-smoothing: antialiased; }
+  #stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.35; }
+  .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
+
+  .nav { padding: 32px 0 48px; display: flex; align-items: center; gap: 24px; border-bottom: 1px solid var(--rule); margin-bottom: 56px; }
+  .nav-home { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.15s; }
+  .nav-home:hover { color: var(--steel); }
+  .nav-sep { color: var(--rule); font-size: 12px; }
+  .nav-current { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ember); }
+
+  .page-header { margin-bottom: 56px; }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel); margin-bottom: 14px; }
+  .page-title { font-family: var(--display); font-size: clamp(28px, 4vw, 44px); font-weight: 300; letter-spacing: -0.02em; line-height: 1.15; color: var(--text); margin-bottom: 16px; }
+  .page-sub { font-size: 15px; color: var(--text-dim); line-height: 1.6; max-width: 580px; }
+
+  .category-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); margin: 56px 0 18px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+
+  /* Masonry-style grid */
+  .grid { columns: 3; column-gap: 3px; margin-bottom: 3px; }
+  @media (max-width: 900px) { .grid { columns: 2; } }
+  @media (max-width: 600px) { .grid { columns: 1; } }
+
+  .grid-item { break-inside: avoid; margin-bottom: 3px; position: relative; overflow: hidden; background: var(--panel); cursor: pointer; }
+  .grid-item img { width: 100%; height: auto; display: block; filter: brightness(0.8) saturate(0.9); transition: filter 0.4s, transform 0.4s; }
+  .grid-item:hover img { filter: brightness(1) saturate(1); transform: scale(1.02); }
+  .grid-item .caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 12px; background: linear-gradient(transparent, rgba(8,9,12,0.92)); font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.04em; color: rgba(226,221,214,0.65); opacity: 0; transition: opacity 0.2s; line-height: 1.4; }
+  .grid-item:hover .caption { opacity: 1; }
+
+  /* Reference cards */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+  .ref-card { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 3px; padding: 18px 20px; text-decoration: none; color: inherit; display: block; transition: border-color 0.15s; }
+  .ref-card:hover { border-color: var(--steel); }
+  .card-type { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 7px; }
+  .card-title { font-family: var(--display); font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 7px; line-height: 1.3; }
+  .card-note { font-size: 12.5px; color: #7A7470; line-height: 1.55; }
+  .card-link { font-family: var(--mono); font-size: 9.5px; color: var(--steel); margin-top: 12px; letter-spacing: 0.04em; }
+
+  /* Placeholder */
+  .placeholder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .placeholder { background: var(--panel); border: 1px dashed #1C2128; border-radius: 3px; padding: 32px 20px; display: flex; align-items: center; justify-content: center; aspect-ratio: 4/3; }
+  .placeholder-label { font-family: var(--mono); font-size: 10px; color: #1C2128; letter-spacing: 0.06em; text-align: center; }
+
+  .footer { padding: 60px 0 40px; border-top: 1px solid var(--rule); margin-top: 56px; }
+  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+  .footer-link { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--text-dim); text-decoration: none; text-transform: uppercase; transition: color 0.15s; }
+  .footer-link:hover { color: var(--steel); }
+
+  @media (max-width: 600px) { .wrap { padding: 0 16px 60px; } }
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="wrap">
+
+  <nav class="nav">
+    <a class="nav-home" href="index.html">Philbert Chan</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-current">Things that move me</span>
+  </nav>
+
+  <div class="page-header">
+    <p class="eyebrow">Collage</p>
+    <h1 class="page-title">Things that move me.</h1>
+    <p class="page-sub">Not curated for anyone in particular. This is what I think about, return to, and aim at.</p>
+  </div>
+
+  <!-- SPACE -->
+  <p class="category-label">Space — The scale of things</p>
+  <div class="grid">
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Pale_Blue_Dot.png/960px-Pale_Blue_Dot.png" alt="Pale Blue Dot" loading="lazy">
+      <div class="caption">Pale Blue Dot — NASA/JPL, Voyager 1, Feb 14 1990. Earth from 6 billion km. Public domain.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/NASA-HS201427a-HubbleUltraDeepField2014-20140603.jpg" alt="Hubble Ultra Deep Field" loading="lazy">
+      <div class="caption">Hubble Ultra Deep Field — NASA/ESA. ~10,000 galaxies in a patch of sky the width of a dime at arm's length. Public domain.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/960px-The_Earth_seen_from_Apollo_17.jpg" alt="Blue Marble Apollo 17" loading="lazy">
+      <div class="caption">The Blue Marble — NASA, Apollo 17, Dec 7 1972. Public domain.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg/800px-Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg" alt="Pillars of Creation" loading="lazy">
+      <div class="caption">Pillars of Creation — NASA/ESA/Hubble Heritage Team, 2014. Public domain.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Falcon_9_first_stage_landing_on_LZ-1_-_CRS-9_%2828156581680%29.jpg/960px-Falcon_9_first_stage_landing_on_LZ-1_-_CRS-9_%2828156581680%29.jpg" alt="Falcon 9 landing" loading="lazy">
+      <div class="caption">Falcon 9 first stage landing, CRS-9 — SpaceX/NASA. Public domain.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/960px-FullMoon2010.jpg" alt="Full Moon" loading="lazy">
+      <div class="caption">Full Moon — Gregory H. Revera, CC BY-SA 3.0.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Crab_Nebula.jpg/960px-Crab_Nebula.jpg" alt="Crab Nebula" loading="lazy">
+      <div class="caption">Crab Nebula — NASA/ESA/Hubble. Remnant of a supernova observed by Chinese astronomers in 1054 AD. Public domain.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Hubble_ultra_deep_field.jpg/960px-Hubble_ultra_deep_field.jpg" alt="Hubble Deep Field original" loading="lazy">
+      <div class="caption">Hubble Deep Field — NASA/R. Williams (STScI), 1995. The image that changed cosmology. Public domain.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/HST-SM4.jpeg/960px-HST-SM4.jpeg" alt="Hubble Space Telescope" loading="lazy">
+      <div class="caption">Hubble Space Telescope — NASA. Public domain.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Moonset_International_Space_Station.jpg/960px-Moonset_International_Space_Station.jpg" alt="Moonset from ISS" loading="lazy">
+      <div class="caption">Moonset from the ISS — NASA. Public domain.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Mimas_Cassini.jpg/960px-Mimas_Cassini.jpg" alt="Saturn moon Mimas Cassini" loading="lazy">
+      <div class="caption">Mimas — NASA/JPL/Cassini. Saturn's moon that looks like the Death Star. Public domain.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/The_Dish_antenna.jpg/960px-The_Dish_antenna.jpg" alt="Parkes radio telescope" loading="lazy">
+      <div class="caption">Parkes Radio Telescope — CSIRO, CC BY 3.0. One of humanity's ears pointed at the sky.</div>
+    </div>
+
+  </div>
+
+  <!-- SCIENCE & TECHNOLOGY -->
+  <p class="category-label">Science — Where things got built</p>
+  <div class="grid">
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Gotham.jpg/960px-Above_Gotham.jpg" alt="Manhattan aerial" loading="lazy">
+      <div class="caption">Manhattan from above — CC BY 2.0. The density of human ambition in one frame.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Henry_Ford_1919.jpg/800px-Henry_Ford_1919.jpg" alt="Henry Ford 1919" loading="lazy">
+      <div class="caption">Henry Ford, 1919 — public domain. He didn't invent the car. He invented the production system that made it real.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Albert_Einstein_Head.jpg/800px-Albert_Einstein_Head.jpg" alt="Albert Einstein" loading="lazy">
+      <div class="caption">Albert Einstein — Oren Jack Turner, 1947. Public domain.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/800px-Alan_Turing_Aged_16.jpg" alt="Alan Turing" loading="lazy">
+      <div class="caption">Alan Turing at 16. Broke the Enigma. Invented modern computing. The state chemically castrated him for being gay. Public domain.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Richard_Feynman_Nobel.jpg/800px-Richard_Feynman_Nobel.jpg" alt="Richard Feynman" loading="lazy">
+      <div class="caption">Richard Feynman — Nobel Foundation, 1965. The person who made physics feel like joy. Public domain.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Trinity_shot_color.jpg/960px-Trinity_shot_color.jpg" alt="Trinity nuclear test" loading="lazy">
+      <div class="caption">Trinity Test, July 16 1945 — U.S. Army, public domain. The moment everything changed. Oppenheimer quoted the Bhagavad Gita.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Kitty_Hawk_1903Dec17_%28crop%29.jpg/960px-Kitty_Hawk_1903Dec17_%28crop%29.jpg" alt="Wright Brothers first flight" loading="lazy">
+      <div class="caption">Wright Brothers, Kitty Hawk, Dec 17 1903 — public domain. 12 seconds. 37 metres. Everything after that was different.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Eniac.jpg/960px-Eniac.jpg" alt="ENIAC" loading="lazy">
+      <div class="caption">ENIAC — U.S. Army, 1946. Public domain. The first general-purpose electronic computer. 18,000 vacuum tubes.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Nikola_Tesla%2C_with_his_equipment_Nikola_Tesla_Colorado_Springs_LabDecember_1899.jpg/800px-Nikola_Tesla%2C_with_his_equipment_Nikola_Tesla_Colorado_Springs_LabDecember_1899.jpg" alt="Nikola Tesla Colorado Springs" loading="lazy">
+      <div class="caption">Nikola Tesla, Colorado Springs, 1899 — public domain. A double exposure. He designed the image himself.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Solvay_conference_1927.jpg/1200px-Solvay_conference_1927.jpg" alt="Solvay Conference 1927" loading="lazy">
+      <div class="caption">Solvay Conference, 1927 — public domain. Bohr, Einstein, Curie, Heisenberg, Dirac, Pauli, Planck, Schrödinger. 17 of the 29 people in this photo were Nobel laureates.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Bunsen_and_Kirchhoff.jpg/800px-Bunsen_and_Kirchhoff.jpg" alt="Bunsen and Kirchhoff" loading="lazy">
+      <div class="caption">Bunsen & Kirchhoff — public domain. They invented spectroscopy. We now use it to identify stars billions of light years away.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Camponotus_flavomarginatus_ant.jpg/960px-Camponotus_flavomarginatus_ant.jpg" alt="Ant macro photography" loading="lazy">
+      <div class="caption">Carpenter ant, macro — Muhammad Mahdi Karim, CC BY-SA 4.0. The complexity in things too small to see.</div>
+    </div>
+
+  </div>
+
+  <!-- THE UNIVERSE -->
+  <p class="category-label">The universe — At different scales</p>
+  <div class="grid">
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/280px-PNG_transparency_demonstration_1.png" alt="placeholder" loading="lazy" style="display:none">
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/GoldenGateBridge-001.jpg/960px-GoldenGateBridge-001.jpg" alt="Golden Gate Bridge" loading="lazy">
+      <div class="caption">Golden Gate Bridge — Rich Niewiroski Jr., CC BY 2.5. Engineering as art.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/800px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg" alt="Mona Lisa" loading="lazy">
+      <div class="caption">Mona Lisa — Leonardo da Vinci, c.1503–1519. Public domain. The most visited painting in the world.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Starry_Night_Over_the_Rhone.jpg/1280px-Starry_Night_Over_the_Rhone.jpg" alt="Starry Night Over the Rhône Van Gogh" loading="lazy">
+      <div class="caption">Starry Night Over the Rhône — Van Gogh, 1888. Public domain. He painted the sky like he knew something about it.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" alt="The Starry Night Van Gogh" loading="lazy">
+      <div class="caption">The Starry Night — Van Gogh, 1889. Public domain. Painted from his room in the asylum at Saint-Rémy.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Michelangelo_-_Creation_of_Adam_%28cropped%29.jpg/1280px-Michelangelo_-_Creation_of_Adam_%28cropped%29.jpg" alt="Creation of Adam Michelangelo" loading="lazy">
+      <div class="caption">The Creation of Adam — Michelangelo, c.1512. Public domain. Sistine Chapel ceiling.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Camponotus_flavomarginatus_ant.jpg/960px-Camponotus_flavomarginatus_ant.jpg" alt="placeholder2" loading="lazy" style="display:none">
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Colosseum_in_Rome%2C_Italy_-_April_2007.jpg/1280px-Colosseum_in_Rome%2C_Italy_-_April_2007.jpg" alt="Colosseum Rome" loading="lazy">
+      <div class="caption">Colosseum, Rome — Diliff, CC BY-SA 2.5. Built 70–80 AD. Still standing. Civilization leaves marks.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/All_Gizah_Pyramids.jpg/1280px-All_Gizah_Pyramids.jpg" alt="Pyramids of Giza" loading="lazy">
+      <div class="caption">Pyramids of Giza — Ricardo Liberato, CC BY-SA 2.0. Built c.2560 BC. Still standing. We barely understand how.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/800px-Empire_State_Building_%28aerial_view%29.jpg" alt="Empire State Building aerial" loading="lazy">
+      <div class="caption">Empire State Building — public domain. Built in 410 days during the Great Depression. 3,400 workers. 7 million hours.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Fibonacci_Spiral.svg/800px-Fibonacci_Spiral.svg.png" alt="Fibonacci Spiral" loading="lazy">
+      <div class="caption">Fibonacci Spiral — public domain. The same pattern in sunflowers, shells, galaxies.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Mandel_zoom_00_mandelbrot_set.jpg/960px-Mandel_zoom_00_mandelbrot_set.jpg" alt="Mandelbrot Set" loading="lazy">
+      <div class="caption">Mandelbrot Set — public domain. Infinite complexity from a simple equation. You can zoom forever.</div>
+    </div>
+
+  </div>
+
+  <!-- NATURE -->
+  <p class="category-label">Nature — The original engineer</p>
+  <div class="grid">
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/24701-nature-natural-beauty.jpg/1280px-24701-nature-natural-beauty.jpg" alt="Nature landscape" loading="lazy">
+      <div class="caption">Public domain.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Gatto_europeo4.jpg/960px-Gatto_europeo4.jpg" alt="placeholder3" loading="lazy" style="display:none">
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Sunflower_from_Silesia2.jpg/800px-Sunflower_from_Silesia2.jpg" alt="Sunflower close up" loading="lazy">
+      <div class="caption">Sunflower — CC BY-SA 2.5. The Fibonacci sequence made visible.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Great_white_shark.jpg/1280px-Great_white_shark.jpg" alt="Great white shark" loading="lazy">
+      <div class="caption">Great White Shark — Pterantula, CC BY-SA 3.0. 400 million years of evolution. Effectively unchanged.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Nelson_Lakes_NP.jpg/1280px-Nelson_Lakes_NP.jpg" alt="Mountain lake landscape" loading="lazy">
+      <div class="caption">Nelson Lakes, New Zealand — Pseudopanax, CC BY-SA 3.0.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/1280px-Good_Food_Display_-_NCI_Visuals_Online.jpg" alt="placeholder4" loading="lazy" style="display:none">
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Oryctolagus_cuniculus_Tasmania_2.jpg/960px-Oryctolagus_cuniculus_Tasmania_2.jpg" alt="placeholder5" loading="lazy" style="display:none">
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Vulture_eating_on_the_ground.jpg/960px-Vulture_eating_on_the_ground.jpg" alt="placeholder6" loading="lazy" style="display:none">
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Aurora_borealis_above_the_magnetic_north_pole.jpg/1280px-Aurora_borealis_above_the_magnetic_north_pole.jpg" alt="Aurora Borealis" loading="lazy">
+      <div class="caption">Aurora Borealis from space — NASA, public domain. Solar wind hitting Earth's magnetic field.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Lightning_strike_jan_2007.jpg/960px-Lightning_strike_jan_2007.jpg" alt="Lightning strike" loading="lazy">
+      <div class="caption">Lightning — U.S. Air Force, public domain. A billion volts. A few milliseconds. Visible from 160 km away.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Snowflake8.png/800px-Snowflake8.png" alt="Snowflake macro" loading="lazy">
+      <div class="caption">Snowflake — Kenneth Libbrecht/CalTech, CC BY-SA 3.0. No two alike. Every one a hexagon. Physics as art.</div>
+    </div>
+
+    <div class="grid-item">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Turkish_Van_Cat.jpg/960px-Turkish_Van_Cat.jpg" alt="placeholder7" loading="lazy" style="display:none">
+    </div>
+
+  </div>
+
+  <!-- FILMS, MUSIC, BOOKS — reference cards -->
+  <p class="category-label">Films, manga, music, books</p>
+  <div class="card-grid">
+
+    <a class="ref-card" href="https://www.imdb.com/title/tt0816692/" target="_blank">
+      <div class="card-type">Film · 2014</div>
+      <div class="card-title">Interstellar</div>
+      <div class="card-note">Christopher Nolan. The closest I've come to awe in a theatre. The ending still bothers me — which is probably the point.</div>
+      <div class="card-link">↗ IMDB</div>
+    </a>
+
+    <a class="ref-card" href="https://www.imdb.com/title/tt3815642/" target="_blank">
+      <div class="card-type">Film · 2015</div>
+      <div class="card-title">The Martian</div>
+      <div class="card-note">The competence fantasy at its best. One problem at a time. No panic. A better operating manual for high-stakes situations than most actual manuals.</div>
+      <div class="card-link">↗ IMDB</div>
+    </a>
+
+    <a class="ref-card" href="https://www.netflix.com/title/81054853" target="_blank">
+      <div class="card-type">Anime · 2022</div>
+      <div class="card-title">Cyberpunk: Edgerunners</div>
+      <div class="card-note">Studio Trigger. The most melancholic and euphoric thing I've watched in recent memory. The ending is correct and I didn't want it to be.</div>
+      <div class="card-link">↗ Netflix</div>
+    </a>
+
+    <a class="ref-card" href="https://www.viz.com/read/manga/blame-master-edition/product/3261" target="_blank">
+      <div class="card-type">Manga · 1998–2003</div>
+      <div class="card-title">BLAME!</div>
+      <div class="card-note">Tsutomu Nihei. A lone figure moving through an incomprehensibly vast dying megastructure. Almost no dialogue. One of the most original things I've encountered.</div>
+      <div class="card-link">↗ VIZ Media</div>
+    </a>
+
+    <a class="ref-card" href="https://www.imdb.com/title/tt2582802/" target="_blank">
+      <div class="card-type">Film · 2014</div>
+      <div class="card-title">Whiplash</div>
+      <div class="card-note">About what you're willing to give up to become exceptional. Whether he won or lost at the end is the wrong question.</div>
+      <div class="card-link">↗ IMDB</div>
+    </a>
+
+    <a class="ref-card" href="https://www.imdb.com/title/tt1375666/" target="_blank">
+      <div class="card-type">Film · 2010</div>
+      <div class="card-title">Inception</div>
+      <div class="card-note">Nolan again. The question at the end isn't whether the top falls. It's whether it matters. The answer is no. He's already home.</div>
+      <div class="card-link">↗ IMDB</div>
+    </a>
+
+    <a class="ref-card" href="https://music.apple.com/us/album/currents/1440825740" target="_blank">
+      <div class="card-type">Album · 2015</div>
+      <div class="card-title">Currents — Tame Impala</div>
+      <div class="card-note">Kevin Parker made this alone. Every instrument. The loneliness and the euphoria are the same thing in this record.</div>
+      <div class="card-link">↗ Apple Music</div>
+    </a>
+
+    <a class="ref-card" href="https://music.apple.com/us/album/the-dark-side-of-the-moon/1065975633" target="_blank">
+      <div class="card-type">Album · 1973</div>
+      <div class="card-title">The Dark Side of the Moon</div>
+      <div class="card-note">Pink Floyd. Time. Money. Brain Damage. The great mid-century anxiety put to music. Still sounds like the inside of a mind that knows something is wrong.</div>
+      <div class="card-link">↗ Apple Music</div>
+    </a>
+
+    <a class="ref-card" href="https://music.apple.com/us/album/heroes/1440923239" target="_blank">
+      <div class="card-type">Album · 1977</div>
+      <div class="card-title">Heroes — David Bowie</div>
+      <div class="card-note">The title track. Recorded with three microphones at different distances, gated by volume. He wanted the vocal to sound pulled from far away. It does.</div>
+      <div class="card-link">↗ Apple Music</div>
+    </a>
+
+    <a class="ref-card" href="https://music.apple.com/us/album/kind-of-blue/268443092" target="_blank">
+      <div class="card-type">Album · 1959</div>
+      <div class="card-title">Kind of Blue — Miles Davis</div>
+      <div class="card-note">The best-selling jazz album ever made. Recorded in two sessions with almost no rehearsal. Spontaneous and inevitable at the same time.</div>
+      <div class="card-link">↗ Apple Music</div>
+    </a>
+
+    <a class="ref-card" href="https://www.goodreads.com/book/show/23848190-the-idea-factory" target="_blank">
+      <div class="card-type">Book · 2012</div>
+      <div class="card-title">The Idea Factory — Jon Gertner</div>
+      <div class="card-note">The history of Bell Labs. The transistor, laser, Unix, information theory — all from one place. This is the north star.</div>
+      <div class="card-link">↗ Goodreads</div>
+    </a>
+
+    <a class="ref-card" href="https://www.goodreads.com/book/show/18050143-zero-to-one" target="_blank">
+      <div class="card-type">Book · 2014</div>
+      <div class="card-title">Zero to One — Peter Thiel</div>
+      <div class="card-note">The monopoly chapter alone is worth it. Build something new, not a better version of something that already exists.</div>
+      <div class="card-link">↗ Goodreads</div>
+    </a>
+
+    <a class="ref-card" href="https://www.goodreads.com/book/show/33652.Pale_Blue_Dot" target="_blank">
+      <div class="card-type">Book · 1994</div>
+      <div class="card-title">Pale Blue Dot — Carl Sagan</div>
+      <div class="card-note">"That's here. That's home. That's us." The most important paragraph written about what we are and what we should do about it.</div>
+      <div class="card-link">↗ Goodreads</div>
+    </a>
+
+    <a class="ref-card" href="https://nav.al/rich" target="_blank">
+      <div class="card-type">Framework</div>
+      <div class="card-title">How to Get Rich — Naval Ravikant</div>
+      <div class="card-note">Specific knowledge, leverage, accountability. The cleanest framework I've found for thinking about what to work on and why.</div>
+      <div class="card-link">↗ nav.al</div>
+    </a>
+
+    <a class="ref-card" href="https://www.goodreads.com/book/show/13588394-antifragile" target="_blank">
+      <div class="card-type">Book · 2012</div>
+      <div class="card-title">Antifragile — Nassim Taleb</div>
+      <div class="card-note">Some things break under stress. Some resist it. Some get stronger from it. The last category is what you want to build and what you want to be.</div>
+      <div class="card-link">↗ Goodreads</div>
+    </a>
+
+    <a class="ref-card" href="https://www.goodreads.com/book/show/29939161-surely-you-re-joking-mr-feynman" target="_blank">
+      <div class="card-type">Book · 1985</div>
+      <div class="card-title">Surely You're Joking, Mr. Feynman!</div>
+      <div class="card-note">Curiosity as a way of life. He picked locks at Los Alamos because he was bored. He won the Nobel Prize because he couldn't stop wondering why.</div>
+      <div class="card-link">↗ Goodreads</div>
+    </a>
+
+  </div>
+
+  <!-- YOUR OWN -->
+  <p class="category-label">Personal — Add your own</p>
+  <div class="placeholder-grid">
+    <div class="placeholder"><span class="placeholder-label">[ screenshot / image ]</span></div>
+    <div class="placeholder"><span class="placeholder-label">[ screenshot / image ]</span></div>
+    <div class="placeholder"><span class="placeholder-label">[ screenshot / image ]</span></div>
+    <div class="placeholder"><span class="placeholder-label">[ screenshot / image ]</span></div>
+    <div class="placeholder"><span class="placeholder-label">[ screenshot / image ]</span></div>
+    <div class="placeholder"><span class="placeholder-label">[ screenshot / image ]</span></div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a class="footer-link" href="index.html">Home</a>
+      <a class="footer-link" href="work.html">Work</a>
+      <a class="footer-link" href="https://github.com/philbertcychan" target="_blank">GitHub</a>
+      <a class="footer-link" href="mailto:philbertcychan@gmail.com">Email</a>
+      <a class="footer-link" href="https://www.linkedin.com/in/philbert-chan/" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [], W, H;
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  function init() {
+    stars = [];
+    const count = Math.floor((W * H) / 6000);
+    for (let i = 0; i < count; i++) stars.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*0.8+0.1, speed: Math.random()*0.03+0.01, opacity: Math.random()*0.6+0.2 });
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (const s of stars) {
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(210,220,235,${s.opacity})`; ctx.fill();
+      s.y -= s.speed;
+      if (s.y < -2) { s.y = H+2; s.x = Math.random()*W; }
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', () => { resize(); init(); });
+  resize(); init(); draw();
+})();
+
+// Hide broken images gracefully
+document.querySelectorAll('img').forEach(img => {
+  img.addEventListener('error', () => {
+    const item = img.closest('.grid-item');
+    if (item) item.style.display = 'none';
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Philbert Chan — Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #08090C;
+    --panel: #0D1117;
+    --panel-border: #1C2128;
+    --text: #E2DDD6;
+    --text-dim: #6B7280;
+    --steel: #4A6FA5;
+    --ember: #C4784A;
+    --rule: #1C2128;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--void); color: var(--text); font-family: var(--body); -webkit-font-smoothing: antialiased; }
+
+  #stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.35; }
+
+  .wrap { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 0 32px 80px; }
+
+  .nav { padding: 32px 0 48px; display: flex; align-items: center; gap: 24px; border-bottom: 1px solid var(--rule); margin-bottom: 56px; }
+  .nav-home { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.15s; }
+  .nav-home:hover { color: var(--steel); }
+  .nav-sep { color: var(--rule); font-size: 12px; }
+  .nav-current { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ember); }
+
+  .page-header { margin-bottom: 56px; }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel); margin-bottom: 14px; }
+  .page-title { font-family: var(--display); font-size: clamp(28px, 4vw, 44px); font-weight: 300; letter-spacing: -0.02em; line-height: 1.15; color: var(--text); margin-bottom: 16px; }
+  .page-sub { font-size: 15px; color: var(--text-dim); line-height: 1.6; max-width: 580px; }
+
+  .work-item {
+    padding: 36px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .work-item:first-of-type { border-top: 1px solid var(--rule); }
+
+  .work-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .work-title {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .work-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+  }
+
+  .work-desc {
+    font-size: 15px;
+    color: #8A837C;
+    line-height: 1.7;
+    max-width: 580px;
+    margin-bottom: 20px;
+  }
+
+  .work-desc em { font-style: normal; color: var(--text); }
+
+  .work-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .stack-tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--steel);
+    background: rgba(74,111,165,0.08);
+    border: 1px solid rgba(74,111,165,0.2);
+    border-radius: 3px;
+    padding: 4px 10px;
+  }
+
+  .work-links { display: flex; gap: 16px; }
+
+  .work-link {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    color: var(--ember);
+    transition: color 0.15s;
+  }
+  .work-link:hover { color: var(--text); }
+
+  .footer { padding: 60px 0 40px; border-top: 1px solid var(--rule); }
+  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+  .footer-link { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: var(--text-dim); text-decoration: none; text-transform: uppercase; transition: color 0.15s; }
+  .footer-link:hover { color: var(--steel); }
+
+  @media (max-width: 600px) { .wrap { padding: 0 20px 60px; } }
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="wrap">
+
+  <nav class="nav">
+    <a class="nav-home" href="index.html">Philbert Chan</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-current">Work</span>
+  </nav>
+
+  <div class="page-header">
+    <p class="eyebrow">Selected work</p>
+    <h1 class="page-title">Things I've built.</h1>
+    <p class="page-sub">Side projects built to learn, to demonstrate, and because the problem was interesting. All public, all live.</p>
+  </div>
+
+  <div class="work-item">
+    <div class="work-meta">
+      <span class="work-title">Grocery Price Pressure Dashboard</span>
+      <span class="work-tag">2026</span>
+    </div>
+    <p class="work-desc">
+      Canadian grocery CPI tracked across 8 categories (Statistics Canada, Jan 2021 – Apr 2026),
+      with <em>category-specific Canadian food-demand elasticity estimates</em> applied to model
+      a low/base/high range of demand sensitivity. The standout: meat is up 7.4% YoY,
+      implying a ~6.9% demand pullback at the base-case elasticity. Built as a self-directed
+      project alongside an application to Instacart's Strategic Finance team.
+    </p>
+    <div class="work-stack">
+      <span class="stack-tag">Python</span>
+      <span class="stack-tag">StatCan API</span>
+      <span class="stack-tag">Chart.js</span>
+      <span class="stack-tag">GitHub Pages</span>
+      <span class="stack-tag">Canadian elasticity research (AAFC 2007, Diakité 2024)</span>
+    </div>
+    <div class="work-links">
+      <a class="work-link" href="https://philbertcychan.github.io/instacart-grocery-pressure/" target="_blank">↗ Live dashboard</a>
+      <a class="work-link" href="https://github.com/philbertcychan/instacart-grocery-pressure" target="_blank">↗ GitHub</a>
+    </div>
+  </div>
+
+  <div class="work-item">
+    <div class="work-meta">
+      <span class="work-title">SaaS Unit Economics Simulator</span>
+      <span class="work-tag">2026</span>
+    </div>
+    <p class="work-desc">
+      Interactive model for exploring how <em>CAC, churn, ARPU, gross margin, and NDR</em>
+      interact to shape LTV, payback period, and long-run revenue. Single-cohort payback
+      analysis with a zero-crossing annotation, a churn sensitivity table, a scenario toggle,
+      and a multi-cohort compounding view showing how revenue builds as overlapping cohorts
+      layer over 24 months. NDR models expansion revenue compounding monthly on surviving customers.
+    </p>
+    <div class="work-stack">
+      <span class="stack-tag">Vanilla JS</span>
+      <span class="stack-tag">Chart.js</span>
+      <span class="stack-tag">GitHub Pages</span>
+      <span class="stack-tag">SaaS unit economics</span>
+    </div>
+    <div class="work-links">
+      <a class="work-link" href="https://philbertcychan.github.io/unit-econ-simulator/" target="_blank">↗ Live simulator</a>
+      <a class="work-link" href="https://github.com/philbertcychan/unit-econ-simulator" target="_blank">↗ GitHub</a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a class="footer-link" href="index.html">Home</a>
+      <a class="footer-link" href="collage.html">Collage</a>
+      <a class="footer-link" href="https://github.com/philbertcychan" target="_blank">GitHub</a>
+      <a class="footer-link" href="mailto:philbertcychan@gmail.com">Email</a>
+      <a class="footer-link" href="https://www.linkedin.com/in/philbert-chan/" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [], W, H;
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  function init() {
+    stars = [];
+    const count = Math.floor((W * H) / 6000);
+    for (let i = 0; i < count; i++) stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 0.8 + 0.1, speed: Math.random() * 0.03 + 0.01, opacity: Math.random() * 0.6 + 0.2 });
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (const s of stars) {
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(210, 220, 235, ${s.opacity})`; ctx.fill();
+      s.y -= s.speed;
+      if (s.y < -2) { s.y = H + 2; s.x = Math.random() * W; }
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', () => { resize(); init(); });
+  resize(); init(); draw();
+})();
+</script>
+
+</body>
+</html>
